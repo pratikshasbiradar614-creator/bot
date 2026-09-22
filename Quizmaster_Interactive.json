@@ -1,0 +1,96 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# 🤖 QuizMaster Interactive Notebook — Study & Architecture Notes\n",
+        "\n",
+        "An interactive study and AI quiz suite designed for tracking performance, managing study streaks, and testing domain knowledge using local LLM integration (`llama3.2`).\n",
+        "\n",
+        "**Tech Stack:** Python • Pandas • Matplotlib • ipywidgets • Ollama (`llama3.2`)\n",
+        "\n",
+        "---"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 1. System Overview\n",
+        "\n",
+        "The QuizMaster interactive notebook is built with a dual-engine architecture to ensure continuous functionality:\n",
+        "\n",
+        "- **Primary AI Engine:** Connects to a local instance of Ollama running `llama3.2` to generate dynamically generated multiple-choice questions in strict JSON format.\n",
+        "- **Fallback Engine:** A built-in offline question bank that seamlessly activates whenever Ollama is unreachable or unavailable."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 2. Core Architecture & Logic\n",
+        "\n",
+        "### Quiz State Management\n",
+        "The application maintains session state across the following key metrics:\n",
+        "- **Current Score & Streak:** Tracks consecutive correct answers and updates the all-time high streak for the session.\n",
+        "- **Smart Hints:** Provides a 50/50 hint mechanism by dynamically identifying and eliminating one incorrect distractor option.\n",
+        "- **Robust JSON Parsing:** Uses regex cleaning to strip out markdown fences (` ```json `) returned by LLMs to prevent runtime exceptions."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 3. Data Schema & Persistence\n",
+        "\n",
+        "All completed quiz sessions automatically log historical metrics into a persistent file named `quiz_history.csv`.\n",
+        "\n",
+        "### Data Fields:\n",
+        "- `Date`: Timestamp of completion (%Y-%m-%d %H:%M)\n",
+        "- `Topic`: Subject area tested (e.g., Python, Data Structures)\n",
+        "- `Difficulty`: Easy, Medium, or Hard\n",
+        "- `Score`: Number of correctly answered questions\n",
+        "- `Total`: Total questions in session\n",
+        "- `Percentage`: Overall accuracy percentage\n",
+        "- `Best_Streak`: Longest streak achieved during the attempt"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 4. User Interface & Analytics\n",
+        "\n",
+        "### Interactive Controls (`ipywidgets`)\n",
+        "1. **Configuration Bar:** Text input for topics and dropdown selection for difficulty levels.\n",
+        "2. **Interactive Quiz View:** Radio button selections with real-time feedback outputs.\n",
+        "3. **Gamification Layer:** Unlocks achievements and badges (e.g., *First Step*, *Perfect Score*, *Streak Builder*) based on performance thresholds."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 🚀 Key Takeaways\n",
+        "\n",
+        "- Demonstrates production-grade local LLM integration using defensive parsing.\n",
+        "- Implements stateful UI mechanics directly inside Jupyter environments.\n",
+        "- Provides historical performance analytics and persistent data tracking."
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.x"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}
